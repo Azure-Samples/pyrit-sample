@@ -1,0 +1,96 @@
+[tool.poetry]
+name = "live-chat-translation"
+version = "0.1.0"
+description = ""
+authors = ["Ricardo Cataldi <rcataldi@microsoft.com>"]
+packages = [{include = "app", from = "."}]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = ">=3.12, <3.14"
+fastapi = ">=0.115.12,<0.116.0"
+websockets = ">=15.0.1,<16.0.0"
+aiortc = ">=1.11.0,<2.0.0"
+openai = {version = ">=1.76.0,<2.0.0", extras = ["realtime"]}
+python-jose = {version = ">=3.4.0,<4.0.0", extras = ["cryptography"]}
+passlib = {version = ">=1.7.4,<2.0.0", extras = ["bcrypt"]}
+uvicorn = "^0.34.2"
+python-multipart = "^0.0.20"
+bcrypt = "4.0.1"
+tenacity = "^9.1.2"
+pydantic = {extras = ["email"], version = "^2.11.3"}
+numpy = "^2.2.5"
+pyrit = "^0.8.1"
+
+
+[tool.poetry.group.dev.dependencies]
+faker = "*"
+python-dotenv = "*"
+poetry-plugin-export = "*"
+jupyterlab = "^4.3.5"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-asyncio = "*"
+rouge = "*"
+
+
+[tool.poetry.group.lint.dependencies]
+pylint = "*"
+black = {extras = ["jupyter"], version = "^25.1.0"}
+isort = "*"
+
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q -s"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "async: marks tests as async (select with '-m async')",
+    "slow: marks tests as slow (select with '-m slow')"
+]
+
+
+[tool.pylint]
+fail-under = 8.5
+max-line-length = 100
+max-complexity = 10
+good-names = ["i", "j", "k", "ex", "Run", "_"]
+disable = [
+    "C0114", "C0115", "C0116", "C0301",  # Docstrings & Line Length Warnings
+    "W3101",  # `confusing-with-statement` (False Positive)
+    "E0401"  # `import-error` (Fixes false positives on local imports)
+]
+
+
+load-plugins = [
+    "pylint.extensions.mccabe",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311', 'py312']  # Explicit Python 3.12 support
+include = '\.pyi?$'
+exclude = '\.git|\.hg|\.mypy_cache|\.tox|\.venv|_build|buck-out|build|dist'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 100
