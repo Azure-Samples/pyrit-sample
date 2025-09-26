@@ -28,7 +28,7 @@ pyrit = "^0.8.1"
 faker = "*"
 python-dotenv = "*"
 poetry-plugin-export = "*"
-jupyterlab = "^4.3.5"
+jupyterlab = "^4.4.8"
 
 
 [tool.poetry.group.test.dependencies]
